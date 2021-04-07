@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :show]
+  before_action :same_user, only: [:edit, :update]
 
   def new
     @user = User.new
@@ -45,5 +46,12 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def same_user
+    unless @user == current_user
+      flash[:alert] = "You are not authorized for this action"
+      redirect_to @user
+    end
   end
 end
