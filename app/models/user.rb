@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   before_save :email_downcase, :username_downcase
 
-  has_many :articles
+  has_many :articles, dependent: :destroy
   
   validates :username, presence: true, 
                       uniqueness: { case_sensitive: false },
